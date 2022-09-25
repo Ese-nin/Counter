@@ -1,19 +1,27 @@
 .App {
-    width: 150px;
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    margin: 100px;
+}
+
+.actButton {
+    width: 30%;
+    height: 25px;
+    color: aquamarine;
+    background-color: darkslategrey;
     border: 2px solid aqua;
-    border-radius: 20px;
-    margin: 100px 0 0 200px;
-    padding: 5px;
+    border-radius: 5px;
 }
 
-.display {
-    font-size: 60px;
-    height: 100px;
-    background-color: gainsboro;
-    border-radius: 10px;
+.disButton {
+    width: 30%;
+    height: 25px;
+    color: rgba(127, 255, 212, 0.5);
+    background-color: darkslategrey;
+    border: 2px solid rgba(0, 255, 255, 0.5);
+    border-radius: 5px;
 }
 
-.errorCount {
-    color: red;
+.input {
+    width: 50px;
 }

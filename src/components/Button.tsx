@@ -10,8 +10,15 @@ const Button = (props: ButtonPropsType) => {
 
     const {name, callBack, disable} = props
 
+    let style = disable ? "disButton" : "actButton"
+
     return (
-        <button disabled={disable} onClick={callBack}>{name}</button>
+        <button
+            className={style}
+            disabled={disable}
+            onClick={callBack}>
+            {name}
+        </button>
     );
 };
 

@@ -1,25 +1,51 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import Counter from "./components/Counter";
+import SettingWindow from "./components/SettingWindow";
 
 function App() {
 
-    const [count, setCount] = useState<number>(0)
-    const [error, setError] = useState<boolean>(false)
+    const [minValue, setMinValue] = useState(0);
+    const [maxValue, setMaxValue] = useState(5);
+    const [count, setCount] = useState(minValue);
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        localStorage.setItem("counterValue", JSON.stringify(count))
+    }, [count])
+
+    useEffect(() => {
+        localStorage.setItem("minValue", JSON.stringify(minValue))
+    }, [minValue])
+
+    useEffect(() => {
+        localStorage.setItem("maxValue", JSON.stringify(maxValue))
+    }, [maxValue])
+
 
     const tap = () => {
         const currentCount = count + 1
         setCount(currentCount)
-        if (count === 4) setError(true)
+        if (count === maxValue - 1) setError(true)
     }
+
     const zero = () => {
-        setCount(0)
+        setCount(minValue)
         setError(false)
+    }
+
+    const setValue = (newMinValue: number, newMaxValue: number) => {
+        setMinValue(newMinValue);
+        setMaxValue(newMaxValue);
+        setCount(newMinValue)
     }
 
     return (
         <div className="App">
+            <SettingWindow
+                setValue={setValue}/>
             <Counter
+                minValue={minValue}
                 count={count}
                 error={error}
                 tap={tap}
