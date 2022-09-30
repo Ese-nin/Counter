@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {useState} from 'react';
 import s from "./SettingWindow.module.css";
 import Button from "./Button";
 import Input from "./Input";
@@ -18,10 +18,12 @@ const SettingWindow = (props: SetWindPropsType) => {
     const [warn, setWarn] = useState(false)
 
     const minValueChange = (value: string) => {
+        setWarn(false)
         setMin(value)
     }
 
     const maxValueChange = (value: string) => {
+        setWarn(false)
         setMax(value)
     }
 
