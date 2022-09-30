@@ -4,15 +4,18 @@ import Button from "./Button";
 import Input from "./Input";
 
 type SetWindPropsType = {
+    minValue: string
+    maxValue: string
     setValue: (newMinValue: number, newMaxValue: number) => void
 }
 
 const SettingWindow = (props: SetWindPropsType) => {
 
-    const {setValue} = props
+    const {setValue, minValue, maxValue} = props
 
-    const [min, setMin] = useState("")
-    const [max, setMax] = useState("")
+    const [min, setMin] = useState(minValue)
+    const [max, setMax] = useState(maxValue)
+    const [warn, setWarn] = useState(false)
 
     const minValueChange = (value: string) => {
         setMin(value)
@@ -23,7 +26,8 @@ const SettingWindow = (props: SetWindPropsType) => {
     }
 
     const setValueHandler = () => {
-        setValue(+min, +max)
+        min >= max ? setWarn(true) :
+            setValue(+min, +max);
     }
 
     return (
@@ -32,12 +36,16 @@ const SettingWindow = (props: SetWindPropsType) => {
                 <div className={s.display}>
                     MIN VALUE
                     <Input
+                        warn={warn}
+                        value={warn ? "000" : min}
                         ValueChange={minValueChange}
                         type="number"/>
                     MAX VALUE
                     <Input
+                        warn={warn}
+                        value={warn ? "999" : max}
                         ValueChange={maxValueChange}
-                           type="number"/>
+                        type="number"/>
                 </div>
                 <div className={s.buttons}>
                     <Button name="set" callBack={setValueHandler}/>

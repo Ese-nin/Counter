@@ -1,0 +1,9 @@
+.warning {
+    width: 50px;
+    border: crimson solid 2px;
+    color: crimson;
+}
+
+.input {
+    width: 50px;
+}

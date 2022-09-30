@@ -24,7 +24,7 @@ const Counter = (props: CounterPropsType) => {
                 <div className={s.buttons}>
                     <Button
                         disable={error}
-                        name="tap"
+                        name="+"
                         callBack={tap}/>
                     <Button
                         disable={count === minValue}

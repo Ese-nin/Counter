@@ -37,12 +37,15 @@ function App() {
     const setValue = (newMinValue: number, newMaxValue: number) => {
         setMinValue(newMinValue);
         setMaxValue(newMaxValue);
-        setCount(newMinValue)
+        setCount(newMinValue);
+        setError(false);
     }
 
     return (
         <div className="App">
             <SettingWindow
+                minValue={JSON.stringify(minValue)}
+                maxValue={JSON.stringify(maxValue)}
                 setValue={setValue}/>
             <Counter
                 minValue={minValue}
