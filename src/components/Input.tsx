@@ -4,16 +4,16 @@ import s from "./Input.module.css"
 type InputPropsType = {
     warn: boolean
     value: string
-    ValueChange: (value: string) => void
+    valueChange: (value: string) => void
     type: string
 }
 
 const Input = (props: InputPropsType) => {
 
-    const {ValueChange, type, value, warn} = props
+    const {valueChange, type, value, warn} = props
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        ValueChange(e.currentTarget.value)
+        valueChange(e.currentTarget.value)
     }
 
     return (

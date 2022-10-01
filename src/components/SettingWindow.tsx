@@ -13,8 +13,8 @@ const SettingWindow = (props: SetWindPropsType) => {
 
     const {setValue, minValue, maxValue} = props
 
-    const [min, setMin] = useState(minValue)
-    const [max, setMax] = useState(maxValue)
+    const [min, setMin] = useState<string>(minValue)
+    const [max, setMax] = useState<string>(maxValue)
     const [warn, setWarn] = useState(false)
 
     useEffect(() => {
@@ -34,17 +34,18 @@ const SettingWindow = (props: SetWindPropsType) => {
     }, [])
 
     const minValueChange = (value: string) => {
+        min >= max ? setWarn(true) :
         setWarn(false)
         setMin(value)
     }
 
     const maxValueChange = (value: string) => {
+        min >= max ? setWarn(true) :
         setWarn(false)
         setMax(value)
     }
 
     const setValueHandler = () => {
-        min >= max ? setWarn(true) :
             setValue(+min, +max);
     }
 
@@ -56,17 +57,17 @@ const SettingWindow = (props: SetWindPropsType) => {
                     <Input
                         warn={warn}
                         value={warn ? "000" : min}
-                        ValueChange={minValueChange}
+                        valueChange={minValueChange}
                         type="number"/>
                     MAX VALUE
                     <Input
                         warn={warn}
                         value={warn ? "999" : max}
-                        ValueChange={maxValueChange}
+                        valueChange={maxValueChange}
                         type="number"/>
                 </div>
                 <div className={s.buttons}>
-                    <Button name="set" callBack={setValueHandler}/>
+                    <Button disable={warn} name="set" callBack={setValueHandler}/>
                 </div>
             </div>
         </div>
