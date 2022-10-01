@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from "./SettingWindow.module.css";
 import Button from "./Button";
 import Input from "./Input";
@@ -16,6 +16,22 @@ const SettingWindow = (props: SetWindPropsType) => {
     const [min, setMin] = useState(minValue)
     const [max, setMax] = useState(maxValue)
     const [warn, setWarn] = useState(false)
+
+    useEffect(() => {
+        let temp = localStorage.getItem("minValue");
+        if (temp) {
+            let newValue = JSON.parse(temp)
+            setMin(newValue)
+        }
+    }, [])
+
+    useEffect(() => {
+        let temp = localStorage.getItem("maxValue");
+        if (temp) {
+            let newValue = JSON.parse(temp)
+            setMax(newValue)
+        }
+    }, [])
 
     const minValueChange = (value: string) => {
         setWarn(false)

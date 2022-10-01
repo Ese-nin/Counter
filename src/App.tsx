@@ -5,8 +5,19 @@ import SettingWindow from "./components/SettingWindow";
 
 function App() {
 
+
+    /*let tempMin = localStorage.getItem("minValue");
+    let newMin;
+    tempMin ? newMin = JSON.parse(tempMin) : newMin = 0
+
+    let tempMax = localStorage.getItem("minValue");
+    let newMax;
+    tempMax ? newMax = JSON.parse(tempMax) : newMax = 5*/
+
+
     const [minValue, setMinValue] = useState(0);
     const [maxValue, setMaxValue] = useState(5);
+
     const [count, setCount] = useState(minValue);
     const [error, setError] = useState(false);
 
