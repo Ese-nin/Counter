@@ -35,18 +35,26 @@ const SettingWindow = (props: SetWindPropsType) => {
 
     const minValueChange = (value: string) => {
         min >= max ? setWarn(true) :
-        setWarn(false)
+            setWarn(false)
         setMin(value)
     }
 
     const maxValueChange = (value: string) => {
         min >= max ? setWarn(true) :
-        setWarn(false)
+            setWarn(false)
         setMax(value)
     }
 
     const setValueHandler = () => {
+        min >= max ? setWarn(true) :
             setValue(+min, +max);
+    }
+
+    const defaultValueHandler = () => {
+        setWarn(false)
+        setMin("0")
+        setMax("5")
+        setValue(+min, +max);
     }
 
     return (
@@ -68,6 +76,7 @@ const SettingWindow = (props: SetWindPropsType) => {
                 </div>
                 <div className={s.buttons}>
                     <Button disable={warn} name="set" callBack={setValueHandler}/>
+                    <Button name="default" callBack={defaultValueHandler}/>
                 </div>
             </div>
         </div>

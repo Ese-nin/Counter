@@ -5,7 +5,7 @@
 }
 
 .actButton {
-    width: 30%;
+    min-width: 30%;
     height: 25px;
     color: aquamarine;
     background-color: darkslategrey;
@@ -14,7 +14,7 @@
 }
 
 .disButton {
-    width: 30%;
+    min-width: 30%;
     height: 25px;
     color: rgba(127, 255, 212, 0.5);
     background-color: darkslategrey;
