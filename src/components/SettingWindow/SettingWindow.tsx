@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import s from "./SettingWindow.module.css";
-import Button from "./Button";
-import Input from "./Input";
+import Button from "../Button/Button";
+import Input from "../Input/Input";
 
 type SetWindPropsType = {
     minValue: string
@@ -33,28 +33,29 @@ const SettingWindow = (props: SetWindPropsType) => {
         }
     }, [])
 
+    const exam = +min >= +max - 1
+
     const minValueChange = (value: string) => {
-        min >= max ? setWarn(true) :
-            setWarn(false)
+        exam ? setWarn(true) : setWarn(false);
+
         setMin(value)
     }
 
     const maxValueChange = (value: string) => {
-        min >= max ? setWarn(true) :
-            setWarn(false)
+        exam ? setWarn(true) : setWarn(false);
+
         setMax(value)
     }
 
     const setValueHandler = () => {
-        min >= max ? setWarn(true) :
+        exam ? setWarn(true) :
             setValue(+min, +max);
     }
 
     const defaultValueHandler = () => {
-        setWarn(false)
+        if (warn) {setWarn(false)}
         setMin("0")
         setMax("5")
-        setValue(+min, +max);
     }
 
     return (
@@ -65,14 +66,12 @@ const SettingWindow = (props: SetWindPropsType) => {
                     <Input
                         warn={warn}
                         value={warn ? "000" : min}
-                        valueChange={minValueChange}
-                        type="number"/>
+                        valueChange={minValueChange}/>
                     MAX VALUE
                     <Input
                         warn={warn}
                         value={warn ? "999" : max}
-                        valueChange={maxValueChange}
-                        type="number"/>
+                        valueChange={maxValueChange}/>
                 </div>
                 <div className={s.buttons}>
                     <Button disable={warn} name="set" callBack={setValueHandler}/>

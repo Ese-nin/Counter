@@ -5,12 +5,11 @@ type InputPropsType = {
     warn: boolean
     value: string
     valueChange: (value: string) => void
-    type: string
 }
 
 const Input = (props: InputPropsType) => {
 
-    const {valueChange, type, value, warn} = props
+    const {valueChange, value, warn} = props
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         valueChange(e.currentTarget.value)
@@ -18,10 +17,11 @@ const Input = (props: InputPropsType) => {
 
     return (
         <input
+            disabled={warn}
             value={value}
             className={warn ? s.warning : s.input}
             onChange={onChangeHandler}
-            type={type}/>
+            type="number"/>
     );
 };
 

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import Counter from "./components/Counter";
-import SettingWindow from "./components/SettingWindow";
+import Counter from "./components/Counter/Counter";
+import SettingWindow from "./components/SettingWindow/SettingWindow";
 
 function App() {
 
