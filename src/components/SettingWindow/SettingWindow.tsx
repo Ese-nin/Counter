@@ -15,7 +15,7 @@ const SettingWindow = (props: SetWindPropsType) => {
 
     const [min, setMin] = useState<string>(minValue)
     const [max, setMax] = useState<string>(maxValue)
-    const [warn, setWarn] = useState(false)
+    const [warn, setWarn] = useState("")
 
     useEffect(() => {
         let temp = localStorage.getItem("minValue");
@@ -33,45 +33,62 @@ const SettingWindow = (props: SetWindPropsType) => {
         }
     }, [])
 
-    const exam = +min >= +max - 1
+    const minOverMax = +min >= +max - 1
 
     const minValueChange = (value: string) => {
-        exam ? setWarn(true) : setWarn(false);
+        minOverMax ? setWarn("warn") : setWarn("");
 
         setMin(value)
     }
 
     const maxValueChange = (value: string) => {
-        exam ? setWarn(true) : setWarn(false);
+        minOverMax ? setWarn("warn") : setWarn("");
 
         setMax(value)
     }
 
     const setValueHandler = () => {
-        exam ? setWarn(true) :
-            setValue(+min, +max);
+        if (Number.isInteger(+min) && Number.isInteger(+max)) {
+            minOverMax ? setWarn("warn") : setValue(+min, +max);
+        }
     }
 
     const defaultValueHandler = () => {
-        if (warn) {setWarn(false)}
+        if (warn) setWarn("")
         setMin("0")
         setMax("5")
     }
+
+    let errorSpanMin = ""
+    if (!Number.isInteger(+min)) {
+        errorSpanMin = "enter an integer"
+    } else if (+min > +max) {
+        errorSpanMin = "min > max"
+    } else if (+min === +max) {
+        errorSpanMin = "min = max"
+    }
+
+    let errorSpanMax = Number.isInteger(+max) ? "" : "enter an integer"
 
     return (
         <div className={s.container}>
             <div className={s.wrapper}>
                 <div className={s.display}>
+
                     MIN VALUE
+                    <span className={s.errorSpan}>{errorSpanMin}</span>
                     <Input
                         warn={warn}
-                        value={warn ? "000" : min}
+                        value={min}
                         valueChange={minValueChange}/>
+
                     MAX VALUE
+                    <span className={s.errorSpan}>{errorSpanMax}</span>
                     <Input
                         warn={warn}
-                        value={warn ? "999" : max}
+                        value={max}
                         valueChange={maxValueChange}/>
+
                 </div>
                 <div className={s.buttons}>
                     <Button disable={warn} name="set" callBack={setValueHandler}/>

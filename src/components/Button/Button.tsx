@@ -4,7 +4,7 @@ import s from "./Button.module.css"
 type ButtonPropsType = {
     name: string
     callBack: () => void
-    disable?: boolean
+    disable?: string
 }
 
 const Button = (props: ButtonPropsType) => {
@@ -17,7 +17,7 @@ const Button = (props: ButtonPropsType) => {
     return (
         <button
             className={style}
-            disabled={disable}
+            disabled={!!disable}
             onClick={callBack}>
             {name}
         </button>

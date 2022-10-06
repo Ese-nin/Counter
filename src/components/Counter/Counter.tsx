@@ -5,15 +5,15 @@ import s from "./Counter.module.css"
 
 type CounterPropsType = {
     minValue: number
-    error: boolean
+    error: string
     count: number
-    tap: () => void
-    zero: () => void
+    inc: () => void
+    reset: () => void
 }
 
 const Counter = (props: CounterPropsType) => {
 
-    const {error, count, tap, zero, minValue} = props
+    const {error, count, inc, reset, minValue} = props
 
     return (
         <div className={s.container}>
@@ -25,11 +25,11 @@ const Counter = (props: CounterPropsType) => {
                     <Button
                         disable={error}
                         name="+"
-                        callBack={tap}/>
+                        callBack={inc}/>
                     <Button
-                        disable={count === minValue}
+                        disable={count === minValue ? "disable" : ""}
                         name="reset"
-                        callBack={zero}/>
+                        callBack={reset}/>
                 </div>
             </div>
         </div>

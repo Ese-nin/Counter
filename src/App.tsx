@@ -17,7 +17,7 @@ function App() {
     const [maxValue, setMaxValue] = useState(currentMax);
 
     const [count, setCount] = useState(minValue);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState("");
 
 
     useEffect(() => {
@@ -33,19 +33,19 @@ function App() {
     }, [maxValue])
 
 
-    const tap = () => {
+    const inc = () => {
         const currentCount = count + 1
         setCount(currentCount)
-        if (count === maxValue - 1) setError(true)
+        if (count === maxValue - 1) setError("error")
     }
 
-    const zero = () => {
+    const reset = () => {
         setCount(minValue)
-        setError(false)
+        setError("")
     }
 
     const setValue = (newMinValue: number, newMaxValue: number) => {
-        setError(false);
+        setError("");
         setMinValue(newMinValue);
         setMaxValue(newMaxValue);
         setCount(newMinValue);
@@ -62,8 +62,8 @@ function App() {
                 minValue={minValue}
                 count={count}
                 error={error}
-                tap={tap}
-                zero={zero}/>
+                inc={inc}
+                reset={reset}/>
         </div>
     );
 }
