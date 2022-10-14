@@ -5,12 +5,12 @@ import SettingWindow from "./components/SettingWindow/SettingWindow";
 
 function App() {
 
-
+    // проверка LocalStorage на наличие данных и определение стартовых границ счетчика
     let stringMin = localStorage.getItem("minValue");
-    let currentMin = stringMin ? JSON.parse(stringMin) : 0;
+    let currentMin = stringMin ? +stringMin : 0;
 
     let stringMax = localStorage.getItem("maxValue");
-    let currentMax = stringMax ? JSON.parse(stringMax) : 5;
+    let currentMax = stringMax ? +stringMax : 5;
 
 
     const [minValue, setMinValue] = useState(currentMin);
@@ -32,7 +32,7 @@ function App() {
         localStorage.setItem("maxValue", JSON.stringify(maxValue))
     }, [maxValue])
 
-
+    // обработка счетчика
     const inc = () => {
         const currentCount = count + 1
         setCount(currentCount)
@@ -44,6 +44,7 @@ function App() {
         setError("")
     }
 
+    // обработка окна настроек
     const setValue = (newMinValue: number, newMaxValue: number) => {
         setError("");
         setMinValue(newMinValue);
@@ -53,6 +54,7 @@ function App() {
 
     return (
         <div className="App">
+
             <SettingWindow
                 minValue={JSON.stringify(minValue)}
                 maxValue={JSON.stringify(maxValue)}
