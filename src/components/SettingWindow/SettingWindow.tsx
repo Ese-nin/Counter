@@ -1,24 +1,29 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import s from "./SettingWindow.module.css";
 import Button from "../Button/Button";
 import Input from "../Input/Input";
+import {useDispatch, useSelector} from "react-redux";
+import {RootStateType} from "../../state/store";
+import {
+    changeMaxValueAC,
+    changeMinValueAC,
+    changeWarningAC,
+    InitStateType,
+    resetCountAC
+} from "../../state/counterReducer";
 
-type SetWindPropsType = {
-    minValue: string
-    maxValue: string
-    setValue: (newMinValue: number, newMaxValue: number) => void
-}
+const SettingWindow = () => {
 
-const SettingWindow = (props: SetWindPropsType) => {
+    const state = useSelector<RootStateType, InitStateType>(state => state.counter)
 
-    const {setValue, minValue, maxValue} = props
+    const dispatch = useDispatch()
 
-    const [min, setMin] = useState<string>(minValue)
+    /*const [min, setMin] = useState<string>(minValue)
     const [max, setMax] = useState<string>(maxValue)
-    const [warn, setWarn] = useState("")
+    const [warning, setWarning] = useState("")*/
 
     // при перезагрузке взять из LocalStorage -> minValue и maxValue
-    useEffect(() => {
+    /*useEffect(() => {
         let temp = localStorage.getItem("minValue");
         if (temp) {
             setMin(temp)
@@ -28,9 +33,9 @@ const SettingWindow = (props: SetWindPropsType) => {
         if (temp2) {
             setMax(temp2)
         }
-    }, [])
+    }, [])*/
 
-    useEffect(()=>{
+    /*useEffect(()=>{
        let temp = localStorage.getItem("minValue");
         if (temp) {
             setMin(temp)
@@ -42,58 +47,56 @@ const SettingWindow = (props: SetWindPropsType) => {
         if (temp) {
             setMin(temp)
         }
-    }, [max])
+    }, [max])*/
 
-    const minOverMax = +min >= +max - 1
+    const minOverMax = +state.minValue >= +state.maxValue
 
     // проверка на ошибку
     const minValueChange = (value: string) => {
         minOverMax
-            ? setWarn("warn")
-            : setWarn("");
+            ? dispatch(changeWarningAC('warn'))
+            : dispatch(changeWarningAC(''))
 
-        localStorage.setItem("minValue", value)
-
-        setMin(value)
+        dispatch(changeMinValueAC(value))
     }
 
     const maxValueChange = (value: string) => {
         minOverMax
-            ? setWarn("warn")
-            : setWarn("");
+            ? dispatch(changeWarningAC('warn'))
+            : dispatch(changeWarningAC(''))
 
-        localStorage.setItem("maxValue", value)
-
-        setMax(value)
+        dispatch(changeMaxValueAC(value))
     }
 
     // регистрация ошибки либо отправка значений инпутов в LocalStorage, если ошибки нет
     const setValueHandler = () => {
-        if (Number.isInteger(+min) && Number.isInteger(+max)) {
+        if (Number.isInteger(+state.minValue) && Number.isInteger(+state.maxValue)) {
             minOverMax
-                ? setWarn("warn")
-                : setValue(+min, +max);
+                ? dispatch(changeWarningAC('warn'))
+                : dispatch(resetCountAC(+state.minValue))
         }
     }
 
     // сброс значений на дефолтные
     const defaultValueHandler = () => {
-        if (warn) setWarn("")
-        setMin("0")
-        setMax("5")
+        if (state.warning) {
+            dispatch(changeWarningAC(''))
+        }
+        minValueChange("0")
+        maxValueChange("5")
     }
 
     // errorSpan и его варианты при разных ошибках
     let errorSpanMin = ""
-    if (!Number.isInteger(+min)) {
+    if (!Number.isInteger(+state.minValue)) {
         errorSpanMin = "enter an integer"
-    } else if (+min > +max) {
+    } else if (+state.minValue > +state.maxValue) {
         errorSpanMin = "min > max"
-    } else if (+min === +max) {
+    } else if (+state.minValue === +state.maxValue) {
         errorSpanMin = "min = max"
     }
 
-    let errorSpanMax = Number.isInteger(+max) ? "" : "enter an integer"
+    let errorSpanMax = Number.isInteger(+state.maxValue) ? "" : "enter an integer"
 
     return (
         <div className={s.container}>
@@ -103,20 +106,20 @@ const SettingWindow = (props: SetWindPropsType) => {
                     MIN VALUE
                     <span className={s.errorSpan}>{errorSpanMin}</span>
                     <Input
-                        warn={warn}
-                        value={min}
+                        warn={state.warning}
+                        value={state.minValue}
                         valueChange={minValueChange}/>
 
                     MAX VALUE
                     <span className={s.errorSpan}>{errorSpanMax}</span>
                     <Input
-                        warn={warn}
-                        value={max}
+                        warn={state.warning}
+                        value={state.maxValue}
                         valueChange={maxValueChange}/>
 
                 </div>
                 <div className={s.buttons}>
-                    <Button disable={warn} name="set" callBack={setValueHandler}/>
+                    <Button disable={state.warning} name="save" callBack={setValueHandler}/>
                     <Button name="default" callBack={defaultValueHandler}/>
                 </div>
             </div>

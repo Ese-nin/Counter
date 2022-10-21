@@ -1,26 +1,37 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './App.css';
 import Counter from "./components/Counter/Counter";
 import SettingWindow from "./components/SettingWindow/SettingWindow";
+import {useDispatch, useSelector} from "react-redux";
+import {RootStateType} from "./state/store";
+import {
+    changeErrorCountAC,
+    increaseCountAC,
+    InitStateType,
+    resetCountAC
+} from "./state/counterReducer";
 
 function App() {
 
     // проверка LocalStorage на наличие данных и определение стартовых границ счетчика
-    let stringMin = localStorage.getItem("minValue");
+    /*let stringMin = localStorage.getItem("minValue");
     let currentMin = stringMin ? +stringMin : 0;
 
     let stringMax = localStorage.getItem("maxValue");
-    let currentMax = stringMax ? +stringMax : 5;
+    let currentMax = stringMax ? +stringMax : 5;*/
 
+    const state = useSelector<RootStateType, InitStateType>(state => state.counter)
 
-    const [minValue, setMinValue] = useState(currentMin);
-    const [maxValue, setMaxValue] = useState(currentMax);
+    const dispatch = useDispatch()
+
+    /*const [minValue, setMinValue] = useState(0);
+    const [maxValue, setMaxValue] = useState(5);
 
     const [count, setCount] = useState(minValue);
-    const [error, setError] = useState("");
+    const [errorCount, setErrorCount] = useState("");*/
 
 
-    useEffect(() => {
+    /*useEffect(() => {
         localStorage.setItem("counterValue", JSON.stringify(count))
     }, [count])
 
@@ -30,40 +41,32 @@ function App() {
 
     useEffect(() => {
         localStorage.setItem("maxValue", JSON.stringify(maxValue))
-    }, [maxValue])
+    }, [maxValue])*/
 
     // обработка счетчика
     const inc = () => {
-        const currentCount = count + 1
-        setCount(currentCount)
-        if (count === maxValue - 1) setError("error")
+        dispatch(increaseCountAC())
     }
 
     const reset = () => {
-        setCount(minValue)
-        setError("")
+        /*setCount(minValue)
+        setErrorCount("")*/
+        dispatch(resetCountAC(+state.minValue))
+        dispatch(changeErrorCountAC(''))
     }
 
     // обработка окна настроек
-    const setValue = (newMinValue: number, newMaxValue: number) => {
-        setError("");
-        setMinValue(newMinValue);
-        setMaxValue(newMaxValue);
-        setCount(newMinValue);
-    }
+    /*const setValue = (newMinValue: number, newMaxValue: number) => {
+        dispatch(changeMinValueAC(newMinValue.toString()))
+        dispatch(changeMaxValueAC(newMaxValue.toString()))
+    }*/
 
     return (
         <div className="App">
 
-            <SettingWindow
-                minValue={JSON.stringify(minValue)}
-                maxValue={JSON.stringify(maxValue)}
-                setValue={setValue}/>
+            <SettingWindow/>
 
             <Counter
-                minValue={minValue}
-                count={count}
-                error={error}
                 inc={inc}
                 reset={reset}/>
         </div>
