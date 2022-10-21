@@ -25,7 +25,7 @@ const Counter = (props: CounterPropsType) => {
                 </div>
                 <div className={s.buttons}>
                     <Button
-                        disable={state.errorCount}
+                        disable={state.count === +state.maxValue ? "disable" : ""}
                         name="+"
                         callBack={inc}/>
                     <Button
