@@ -24,18 +24,20 @@ const SettingWindow = () => {
 
     // проверка на ошибку и изменение значения инпута, если ошибки нет
     const minValueChange = (value: string) => {
-        +state.maxValue <= +value || +value < 0
-            ? dispatch(changeWarningAC('warn'))
-            : dispatch(changeWarningAC(''))
-
+        if (+state.maxValue <= +value || +value < 0) {
+            dispatch(changeWarningAC('warn'))
+        } else {
+            dispatch(changeWarningAC(''))
+        }
         dispatch(changeMinValueAC(value))
     }
 
     const maxValueChange = (value: string) => {
-        +state.minValue >= +value || +value < 0
-            ? dispatch(changeWarningAC('warn'))
-            : dispatch(changeWarningAC(''))
-
+        if (+state.minValue >= +value || +value < 0) {
+            dispatch(changeWarningAC('warn'))
+        } else {
+            dispatch(changeWarningAC(''))
+        }
         dispatch(changeMaxValueAC(value))
     }
 
@@ -64,7 +66,7 @@ const SettingWindow = () => {
         errorSpanMin = "enter an integer"
     } else if (+state.minValue < 0 || +state.maxValue < 0) {
         errorSpanMin = "enter a positive number"
-    }else if (+state.minValue > +state.maxValue) {
+    } else if (+state.minValue > +state.maxValue) {
         errorSpanMin = "min > max"
     } else if (+state.minValue === +state.maxValue) {
         errorSpanMin = "min = max"
