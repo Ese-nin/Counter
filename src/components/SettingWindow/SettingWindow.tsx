@@ -18,40 +18,9 @@ const SettingWindow = () => {
 
     const dispatch = useDispatch()
 
-    /*const [min, setMin] = useState<string>(minValue)
-    const [max, setMax] = useState<string>(maxValue)
-    const [warning, setWarning] = useState("")*/
-
-    // при перезагрузке взять из LocalStorage -> minValue и maxValue
-    /*useEffect(() => {
-        let temp = localStorage.getItem("minValue");
-        if (temp) {
-            setMin(temp)
-        }
-
-        let temp2 = localStorage.getItem("maxValue");
-        if (temp2) {
-            setMax(temp2)
-        }
-    }, [])*/
-
-    /*useEffect(()=>{
-       let temp = localStorage.getItem("minValue");
-        if (temp) {
-            setMin(temp)
-        }
-    }, [min])
-
-    useEffect(()=>{
-        let temp = localStorage.getItem("maxValue");
-        if (temp) {
-            setMin(temp)
-        }
-    }, [max])*/
-
     const minOverMax = +state.minValue >= +state.maxValue
 
-    // проверка на ошибку
+    // проверка на ошибку и изменение значения инпута, если ошибки нет
     const minValueChange = (value: string) => {
         minOverMax
             ? dispatch(changeWarningAC('warn'))
@@ -90,7 +59,9 @@ const SettingWindow = () => {
     let errorSpanMin = ""
     if (!Number.isInteger(+state.minValue)) {
         errorSpanMin = "enter an integer"
-    } else if (+state.minValue > +state.maxValue) {
+    } else if (+state.minValue < 0) {
+        errorSpanMin = 'enter a positive number'
+    }else if (+state.minValue > +state.maxValue) {
         errorSpanMin = "min > max"
     } else if (+state.minValue === +state.maxValue) {
         errorSpanMin = "min = max"
