@@ -19,7 +19,7 @@ const Counter = () => {
     }
 
     const reset = () => {
-        dispatch(resetCountAC(+state.minValue))
+        dispatch(resetCountAC())
         dispatch(changeErrorCountAC(''))
     }
 

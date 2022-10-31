@@ -71,10 +71,8 @@ test('"warning" should be changed', () => {
 
 test('"count" should be changed to "newCount"', () => {
 
-    const newCount = 22
+    const endState = counterReducer(startState, resetCountAC())
 
-    const endState = counterReducer(startState, resetCountAC(newCount))
-
-    expect(endState.count).toBe(newCount)
+    expect(endState.count).toBe(0)
     expect(startState.count).toBe(2)
 })

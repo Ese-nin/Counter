@@ -1,4 +1,4 @@
-import {combineReducers, legacy_createStore as createStore } from "redux";
+import {combineReducers, legacy_createStore as createStore} from "redux";
 import {counterReducer} from "./counterReducer";
 
 const rootReducer = combineReducers({
@@ -7,4 +7,14 @@ const rootReducer = combineReducers({
 
 export type RootStateType = ReturnType<typeof rootReducer>
 
-export const store = createStore(rootReducer)
+/*const preloadedState = {
+    counter: {
+        minValue: '0',
+        maxValue: loadState('maxValue') ? loadState() : '5',
+        count: 0,
+        errorCount: '',
+        warning: ''
+    }
+}*/
+
+export const store = createStore(rootReducer/*, preloadedState*/)

@@ -12,17 +12,19 @@ import {
     resetCountAC
 } from "../../state/counterReducer";
 
+export const selectCounter = (state: RootStateType) => state.counter
+
 const SettingWindow = () => {
 
-    const state = useSelector<RootStateType, InitStateType>(state => state.counter)
+    const state = useSelector<RootStateType, InitStateType>(selectCounter)
 
     const dispatch = useDispatch()
 
-    const minOverMax = +state.minValue >= +state.maxValue
+    // const minOverMax = +state.minValue >= +state.maxValue
 
     // проверка на ошибку и изменение значения инпута, если ошибки нет
     const minValueChange = (value: string) => {
-        minOverMax
+        +state.maxValue <= +value || +value < 0
             ? dispatch(changeWarningAC('warn'))
             : dispatch(changeWarningAC(''))
 
@@ -30,7 +32,7 @@ const SettingWindow = () => {
     }
 
     const maxValueChange = (value: string) => {
-        minOverMax
+        +state.minValue >= +value || +value < 0
             ? dispatch(changeWarningAC('warn'))
             : dispatch(changeWarningAC(''))
 
@@ -40,19 +42,20 @@ const SettingWindow = () => {
     // регистрация ошибки либо отправка значений инпутов в LocalStorage, если ошибки нет
     const setValueHandler = () => {
         if (Number.isInteger(+state.minValue) && Number.isInteger(+state.maxValue)) {
-            minOverMax
-                ? dispatch(changeWarningAC('warn'))
-                : dispatch(resetCountAC(+state.minValue))
+            dispatch(resetCountAC())
         }
     }
+
+    const defaultMinValue = "0"
+    const defaultMaxValue = "5"
 
     // сброс значений на дефолтные
     const defaultValueHandler = () => {
         if (state.warning) {
             dispatch(changeWarningAC(''))
         }
-        minValueChange("0")
-        maxValueChange("5")
+        minValueChange(defaultMinValue)
+        maxValueChange(defaultMaxValue)
     }
 
     // errorSpan и его варианты при разных ошибках
@@ -60,7 +63,7 @@ const SettingWindow = () => {
     if (!Number.isInteger(+state.minValue)) {
         errorSpanMin = "enter an integer"
     } else if (+state.minValue < 0 || +state.maxValue < 0) {
-        errorSpanMin = 'enter a positive number'
+        errorSpanMin = "enter a positive number"
     }else if (+state.minValue > +state.maxValue) {
         errorSpanMin = "min > max"
     } else if (+state.minValue === +state.maxValue) {
