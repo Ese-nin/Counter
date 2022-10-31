@@ -59,7 +59,7 @@ const SettingWindow = () => {
     let errorSpanMin = ""
     if (!Number.isInteger(+state.minValue)) {
         errorSpanMin = "enter an integer"
-    } else if (+state.minValue < 0) {
+    } else if (+state.minValue < 0 || +state.maxValue < 0) {
         errorSpanMin = 'enter a positive number'
     }else if (+state.minValue > +state.maxValue) {
         errorSpanMin = "min > max"
