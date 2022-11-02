@@ -36,21 +36,6 @@ export const counterReducer = (state: InitStateType = initState, action: Actions
                 ...state,
                 ...action.payload
             }
-        /*case 'CHANGE_MAX_VALUE':
-            return {
-                ...state,
-                maxValue: action.payload.maxValue
-            }*/
-        /*case 'CHANGE_ERROR_COUNT':
-            return {
-                ...state,
-                errorCount: action.payload.errorCount
-            }*/
-        /*case "CHANGE_WARNING":
-            return {
-                ...state,
-                warning: action.payload.warning
-            }*/
         case "RESET_COUNT":
             return {
                 ...state,
