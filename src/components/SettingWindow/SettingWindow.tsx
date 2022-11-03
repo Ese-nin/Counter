@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import s from "./SettingWindow.module.css";
 import Button from "../Button/Button";
 import {useDispatch, useSelector} from "react-redux";
@@ -19,6 +19,9 @@ const SettingWindow = () => {
     const state = useSelector<RootStateType, InitStateType>(selectCounter)
 
     const dispatch = useDispatch()
+
+    const [minView, setMinView] = useState(state.minValue)
+    const [maxView, setMaxView] = useState(state.maxValue)
 
     // проверка на ошибку и изменение значения инпута, если ошибки нет
     const minValueChange = (value: string) => {
@@ -42,6 +45,8 @@ const SettingWindow = () => {
     const setValueHandler = () => {
         if (Number.isInteger(+state.minValue) && Number.isInteger(+state.maxValue)) {
             dispatch(setSaveValueAC())
+            setMinView(state.minValue)
+            setMaxView(state.maxValue)
         }
     }
 
@@ -63,6 +68,8 @@ const SettingWindow = () => {
                 <div className={s.display}>
 
                     <InputWithSpan
+                        minView={minView}
+                        maxView={maxView}
                         title={'MIN VALUE'}
                         minValue={state.minValue}
                         maxValue={state.maxValue}
@@ -71,6 +78,8 @@ const SettingWindow = () => {
                     />
 
                     <InputWithSpan
+                        minView={minView}
+                        maxView={maxView}
                         title={'MAX VALUE'}
                         minValue={state.minValue}
                         maxValue={state.maxValue}

@@ -3,6 +3,8 @@ import s from "../SettingWindow/SettingWindow.module.css";
 import Input from "./Input";
 
 type InputWithSpanPropsType = {
+    minView: string
+    maxView: string
     title: 'MIN VALUE' | 'MAX VALUE'
     minValue: string
     maxValue: string
@@ -12,7 +14,7 @@ type InputWithSpanPropsType = {
 
 export const InputWithSpan = (props: InputWithSpanPropsType) => {
 
-    const {title, minValue, maxValue, valueChange, warning} = props
+    const {title, minValue, maxValue, valueChange, warning, minView, maxView} = props
 
     // errorSpan и его варианты при разных ошибках
     let errorSpanMin = ""
@@ -30,10 +32,11 @@ export const InputWithSpan = (props: InputWithSpanPropsType) => {
 
     const finalSpanMessage = title === 'MIN VALUE' ? errorSpanMin : errorSpanMax
     const finalValue = title === 'MIN VALUE' ? minValue : maxValue
+    const finalViewValue = title === 'MIN VALUE' ? minView : maxView
 
     return (
         <>
-            {title}
+            {title}({finalViewValue})
             <span className={s.errorSpan}>{finalSpanMessage}</span>
             <Input
                 warn={warning}
