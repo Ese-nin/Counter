@@ -16,11 +16,13 @@ const Input = (props: InputPropsType) => {
     }
 
     return (
-        <input
-            value={value}
-            className={warn ? s.warning : s.input}
-            onChange={onChangeHandler}
-            type="number"/>
+        <>
+            <input
+                value={value}
+                className={warn ? s.warning : s.input}
+                onChange={onChangeHandler}
+                type="number" />
+        </>
     );
 };
 

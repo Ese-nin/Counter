@@ -1,4 +1,5 @@
 export type InitStateType = {
+    valueForReset: string
     minValue: string
     maxValue: string
     count: number
@@ -12,8 +13,10 @@ type ActionsType = ReturnType<typeof increaseCountAC>
     | ReturnType<typeof changeErrorCountAC>
     | ReturnType<typeof changeWarningAC>
     | ReturnType<typeof resetCountAC>
+    | ReturnType<typeof setSaveValueAC>
 
 const initState = {
+    valueForReset: '0',
     minValue: "0",
     maxValue: "5",
     count: 0,
@@ -39,6 +42,12 @@ export const counterReducer = (state: InitStateType = initState, action: Actions
         case "RESET_COUNT":
             return {
                 ...state,
+                count: +state.valueForReset
+            }
+        case 'SET_SAVE_VALUE':
+            return {
+                ...state,
+                valueForReset: state.minValue,
                 count: +state.minValue
             }
         default:
@@ -90,3 +99,10 @@ export const changeWarningAC = (newWarning: string) => {
         }
     } as const
 }
+export const setSaveValueAC = () => {
+    return {
+        type: 'SET_SAVE_VALUE',
+        payload: {}
+    } as const
+}
+

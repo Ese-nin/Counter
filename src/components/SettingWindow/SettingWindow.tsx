@@ -8,7 +8,7 @@ import {
     changeMinValueAC,
     changeWarningAC,
     InitStateType,
-    resetCountAC
+    setSaveValueAC
 } from "../../state/counterReducer";
 import {InputWithSpan} from "../Input/InputWithSpan";
 
@@ -41,7 +41,7 @@ const SettingWindow = () => {
 
     const setValueHandler = () => {
         if (Number.isInteger(+state.minValue) && Number.isInteger(+state.maxValue)) {
-            dispatch(resetCountAC())
+            dispatch(setSaveValueAC())
         }
     }
 

@@ -3,10 +3,11 @@ import {
     changeMaxValueAC,
     changeMinValueAC, changeWarningAC,
     counterReducer,
-    increaseCountAC, resetCountAC
+    increaseCountAC, resetCountAC, setSaveValueAC
 } from "./counterReducer";
 
 type StartStateType = {
+    valueForReset: string
     minValue: string
     maxValue: string
     count: number
@@ -18,6 +19,7 @@ let startState: StartStateType
 
 beforeEach(() => {
     startState = {
+        valueForReset: '0',
         minValue: '0',
         maxValue: '5',
         count: 2,
@@ -75,4 +77,13 @@ test('"count" should be changed to "newCount"', () => {
 
     expect(endState.count).toBe(0)
     expect(startState.count).toBe(2)
+})
+
+test('"valueForReset" should be equal "minValue"', () => {
+    startState.minValue = '3'
+
+    const endState = counterReducer(startState, setSaveValueAC())
+
+    expect(endState.valueForReset).toBe(endState.minValue)
+    expect(endState.count).toBe(3)
 })
