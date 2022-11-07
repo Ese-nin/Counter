@@ -4,7 +4,7 @@ import Display from "../Display/Display";
 import s from "./Counter.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../state/store";
-import {changeErrorCountAC, increaseCountAC, InitStateType, resetCountAC} from "../../state/counterReducer";
+import {increaseCountAC, InitStateType, resetCountAC} from "../../state/counterReducer";
 
 
 const Counter = () => {
@@ -20,7 +20,6 @@ const Counter = () => {
 
     const reset = () => {
         dispatch(resetCountAC())
-        dispatch(changeErrorCountAC(''))
     }
 
     return (

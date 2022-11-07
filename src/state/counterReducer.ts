@@ -1,26 +1,27 @@
+import {loadState} from "./localStorage";
+
 export type InitStateType = {
     valueForReset: string
     minValue: string
     maxValue: string
     count: number
-    errorCount: string
     warning: string
 }
 
 type ActionsType = ReturnType<typeof increaseCountAC>
     | ReturnType<typeof changeMinValueAC>
     | ReturnType<typeof changeMaxValueAC>
-    | ReturnType<typeof changeErrorCountAC>
     | ReturnType<typeof changeWarningAC>
     | ReturnType<typeof resetCountAC>
     | ReturnType<typeof setSaveValueAC>
 
-const initState = {
+const initState = loadState()
+    ? loadState()
+    : {
     valueForReset: '0',
     minValue: "0",
     maxValue: "5",
     count: 0,
-    errorCount: '',
     warning: ''
 }
 
@@ -33,7 +34,6 @@ export const counterReducer = (state: InitStateType = initState, action: Actions
             }
         case 'CHANGE_MIN_VALUE':
         case 'CHANGE_MAX_VALUE':
-        case 'CHANGE_ERROR_COUNT':
         case "CHANGE_WARNING":
             return {
                 ...state,
@@ -80,14 +80,6 @@ export const changeMaxValueAC = (newMaxValue: string) => {
         type: 'CHANGE_MAX_VALUE',
         payload: {
             maxValue: newMaxValue
-        }
-    } as const
-}
-export const changeErrorCountAC = (newErrorValue: string) => {
-    return {
-        type: 'CHANGE_ERROR_COUNT',
-        payload: {
-            errorCount: newErrorValue
         }
     } as const
 }

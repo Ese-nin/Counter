@@ -55,11 +55,11 @@ const SettingWindow = () => {
 
     // сброс значений на дефолтные
     const defaultValueHandler = () => {
+        minValueChange(defaultMinValue)
+        maxValueChange(defaultMaxValue)
         if (state.warning) {
             dispatch(changeWarningAC(''))
         }
-        minValueChange(defaultMinValue)
-        maxValueChange(defaultMaxValue)
     }
 
     return (

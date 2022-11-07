@@ -1,5 +1,4 @@
 import {
-    changeErrorCountAC,
     changeMaxValueAC,
     changeMinValueAC, changeWarningAC,
     counterReducer,
@@ -11,8 +10,7 @@ type StartStateType = {
     minValue: string
     maxValue: string
     count: number
-    errorCount: string
-    warning: string
+        warning: string
 }
 
 let startState: StartStateType
@@ -23,7 +21,6 @@ beforeEach(() => {
         minValue: '0',
         maxValue: '5',
         count: 2,
-        errorCount: '',
         warning: ''}
 })
 
@@ -51,15 +48,6 @@ test('"maxValue" should be changed', () => {
     const endState = counterReducer(startState, changeMaxValueAC(newValue))
 
     expect(endState.maxValue).toBe(newValue)
-})
-
-test('"errorCount" should be changed', () => {
-
-    const newValue = "error";
-
-    const endState = counterReducer(startState, changeErrorCountAC(newValue))
-
-    expect(endState.errorCount).toBe(newValue)
 })
 
 test('"warning" should be changed', () => {
