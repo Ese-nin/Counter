@@ -7,25 +7,24 @@ import {
     changeMaxValueAC,
     changeMinValueAC,
     changeWarningAC,
-    InitStateType,
     setSaveValueAC
 } from "../../state/counterReducer";
 import {InputWithSpan} from "../Input/InputWithSpan";
 
-export const selectCounter = (state: RootStateType) => state.counter
-
 const SettingWindow = () => {
 
-    const state = useSelector<RootStateType, InitStateType>(selectCounter)
+    const minValue = useSelector<RootStateType, string>(state => state.counter.minValue)
+    const maxValue = useSelector<RootStateType, string>(state => state.counter.maxValue)
+    const warning = useSelector<RootStateType, string>(state => state.counter.warning)
 
     const dispatch = useDispatch()
 
-    const [minView, setMinView] = useState(state.minValue)
-    const [maxView, setMaxView] = useState(state.maxValue)
+    const [minView, setMinView] = useState(minValue)
+    const [maxView, setMaxView] = useState(maxValue)
 
     // проверка на ошибку и изменение значения инпута, если ошибки нет
     const minValueChange = (value: string) => {
-        if (+state.maxValue <= +value || +value < 0) {
+        if (+maxValue <= +value || +value < 0) {
             dispatch(changeWarningAC('warn'))
         } else {
             dispatch(changeWarningAC(''))
@@ -34,7 +33,7 @@ const SettingWindow = () => {
     }
 
     const maxValueChange = (value: string) => {
-        if (+state.minValue >= +value || +value < 0) {
+        if (+minValue >= +value || +value < 0) {
             dispatch(changeWarningAC('warn'))
         } else {
             dispatch(changeWarningAC(''))
@@ -43,10 +42,10 @@ const SettingWindow = () => {
     }
 
     const setValueHandler = () => {
-        if (Number.isInteger(+state.minValue) && Number.isInteger(+state.maxValue)) {
+        if (Number.isInteger(+minValue) && Number.isInteger(+maxValue)) {
             dispatch(setSaveValueAC())
-            setMinView(state.minValue)
-            setMaxView(state.maxValue)
+            setMinView(minValue)
+            setMaxView(maxValue)
         }
     }
 
@@ -57,7 +56,7 @@ const SettingWindow = () => {
     const defaultValueHandler = () => {
         minValueChange(defaultMinValue)
         maxValueChange(defaultMaxValue)
-        if (state.warning) {
+        if (warning) {
             dispatch(changeWarningAC(''))
         }
     }
@@ -71,9 +70,9 @@ const SettingWindow = () => {
                         minView={minView}
                         maxView={maxView}
                         title={'MIN VALUE'}
-                        minValue={state.minValue}
-                        maxValue={state.maxValue}
-                        warning={state.warning}
+                        minValue={minValue}
+                        maxValue={maxValue}
+                        warning={warning}
                         valueChange={minValueChange}
                     />
 
@@ -81,15 +80,15 @@ const SettingWindow = () => {
                         minView={minView}
                         maxView={maxView}
                         title={'MAX VALUE'}
-                        minValue={state.minValue}
-                        maxValue={state.maxValue}
-                        warning={state.warning}
+                        minValue={minValue}
+                        maxValue={maxValue}
+                        warning={warning}
                         valueChange={maxValueChange}
                     />
 
                 </div>
                 <div className={s.buttons}>
-                    <Button disable={state.warning} name="save" callBack={setValueHandler}/>
+                    <Button disable={warning} name="save" callBack={setValueHandler}/>
                     <Button name="default" callBack={defaultValueHandler}/>
                 </div>
             </div>

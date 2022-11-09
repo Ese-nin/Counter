@@ -4,12 +4,14 @@ import Display from "../Display/Display";
 import s from "./Counter.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../state/store";
-import {increaseCountAC, InitStateType, resetCountAC} from "../../state/counterReducer";
+import {increaseCountAC, resetCountAC} from "../../state/counterReducer";
 
 
 const Counter = () => {
 
-    const state = useSelector<RootStateType, InitStateType>(state => state.counter)
+    const count = useSelector<RootStateType, number>(state => state.counter.count)
+    const minValue = useSelector<RootStateType, string>(state => state.counter.minValue)
+    const maxValue = useSelector<RootStateType, string>(state => state.counter.maxValue)
 
     const dispatch = useDispatch()
 
@@ -26,19 +28,19 @@ const Counter = () => {
         <div className={s.container}>
             <div className={s.counter}>
 
-                <div className={state.count >= +state.maxValue ? s.errorCount : s.display}>
-                    <Display count={state.count}/>
+                <div className={count >= +maxValue ? s.errorCount : s.display}>
+                    <Display count={count}/>
                 </div>
 
                 <div className={s.buttons}>
 
                     <Button
-                        disable={state.count >= +state.maxValue ? "disable" : ""}
+                        disable={count >= +maxValue ? "disable" : ""}
                         name="+"
                         callBack={inc}/>
 
                     <Button
-                        disable={state.count === +state.minValue ? "disable" : ""}
+                        disable={count === +minValue ? "disable" : ""}
                         name="reset"
                         callBack={reset}/>
 
