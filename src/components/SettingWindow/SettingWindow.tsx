@@ -8,7 +8,7 @@ import {
     changeMinValueAC,
     changeWarningAC,
     setSaveValueAC
-} from "../../state/counterReducer";
+} from "../../state/reducers/counterReducer";
 import {InputWithSpan} from "../Input/InputWithSpan";
 
 const SettingWindow = () => {

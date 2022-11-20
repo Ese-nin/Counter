@@ -1,5 +1,5 @@
 import {combineReducers, legacy_createStore as createStore} from "redux";
-import {counterReducer} from "./counterReducer";
+import {counterReducer} from "./reducers/counterReducer";
 import {loadState, saveState} from "./localStorage";
 import {throttle} from "lodash";
 
@@ -9,9 +9,7 @@ const rootReducer = combineReducers({
 
 export type RootStateType = ReturnType<typeof rootReducer>
 
-const preloadedState = loadState()
-
-export const store = createStore(rootReducer, preloadedState);
+export const store = createStore(rootReducer, loadState());
 
 
 store.subscribe(throttle(() => {

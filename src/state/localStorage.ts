@@ -1,4 +1,4 @@
-import {InitStateType} from "./counterReducer";
+import {InitStateType} from "./reducers/counterReducer";
 
 export const loadState = () => {
     try {
