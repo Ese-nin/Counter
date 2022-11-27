@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import s from "./SettingWindow.module.css";
 import Button from "../Button/Button";
 import {useDispatch, useSelector} from "react-redux";
@@ -23,43 +23,43 @@ const SettingWindow = () => {
     const [maxView, setMaxView] = useState(maxValue)
 
     // проверка на ошибку и изменение значения инпута, если ошибки нет
-    const minValueChange = (value: string) => {
+    const minValueChange = useCallback((value: string) => {
         if (+maxValue <= +value || +value < 0) {
             dispatch(changeWarningAC('warn'))
         } else {
             dispatch(changeWarningAC(''))
         }
         dispatch(changeMinValueAC(value))
-    }
+    }, []);
 
-    const maxValueChange = (value: string) => {
+    const maxValueChange = useCallback((value: string) => {
         if (+minValue >= +value || +value < 0) {
             dispatch(changeWarningAC('warn'))
         } else {
             dispatch(changeWarningAC(''))
         }
         dispatch(changeMaxValueAC(value))
-    }
+    }, [])
 
-    const setValueHandler = () => {
+    const setValueHandler = useCallback(() => {
         if (Number.isInteger(+minValue) && Number.isInteger(+maxValue)) {
             dispatch(setSaveValueAC())
             setMinView(minValue)
             setMaxView(maxValue)
         }
-    }
+    }, [])
 
     const defaultMinValue = "0"
     const defaultMaxValue = "5"
 
     // сброс значений на дефолтные
-    const defaultValueHandler = () => {
+    const defaultValueHandler = useCallback(() => {
         minValueChange(defaultMinValue)
         maxValueChange(defaultMaxValue)
         if (warning) {
             dispatch(changeWarningAC(''))
         }
-    }
+    }, [])
 
     return (
         <div className={s.container}>

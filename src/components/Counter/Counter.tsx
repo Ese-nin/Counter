@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import Button from "../Button/Button";
 import Display from "../Display/Display";
 import s from "./Counter.module.css"
@@ -7,7 +7,7 @@ import {RootStateType} from "../../state/store";
 import {increaseCountAC, resetCountAC} from "../../state/reducers/counterReducer";
 
 
-const Counter = () => {
+const Counter = React.memo(() => {
 
     const count = useSelector<RootStateType, number>(state => state.counter.count)
     const minValue = useSelector<RootStateType, string>(state => state.counter.minValue)
@@ -16,13 +16,13 @@ const Counter = () => {
     const dispatch = useDispatch()
 
 
-    const inc = () => {
+    const inc = useCallback(() => {
         dispatch(increaseCountAC())
-    }
+    }, [])
 
-    const reset = () => {
+    const reset = useCallback(() => {
         dispatch(resetCountAC())
-    }
+    }, [])
 
     return (
         <div className={s.container}>
@@ -49,6 +49,6 @@ const Counter = () => {
             </div>
         </div>
     );
-};
+});
 
 export default Counter;

@@ -15,7 +15,7 @@ type ActionsType = ReturnType<typeof increaseCountAC>
     | ReturnType<typeof resetCountAC>
     | ReturnType<typeof setSaveValueAC>
 
-const initState = loadState()
+const initState: InitStateType = loadState()
     ? loadState()
     : {
     valueForReset: '0',
@@ -56,45 +56,21 @@ export const counterReducer = (state: InitStateType = initState, action: Actions
 }
 
 
-export const increaseCountAC = () => {
-    return {
-        type: 'INCREASE_COUNT',
-    } as const
-}
-export const resetCountAC = () => {
-    return {
-        type: 'RESET_COUNT',
-        payload: {}
-    } as const
-}
-export const changeMinValueAC = (newMinValue: string) => {
-    return {
-        type: 'CHANGE_MIN_VALUE',
-        payload: {
-            minValue: newMinValue
-        }
-    } as const
-}
-export const changeMaxValueAC = (newMaxValue: string) => {
-    return {
-        type: 'CHANGE_MAX_VALUE',
-        payload: {
-            maxValue: newMaxValue
-        }
-    } as const
-}
-export const changeWarningAC = (newWarning: string) => {
-    return {
-        type: 'CHANGE_WARNING',
-        payload: {
-            warning: newWarning
-        }
-    } as const
-}
-export const setSaveValueAC = () => {
-    return {
-        type: 'SET_SAVE_VALUE',
-        payload: {}
-    } as const
-}
+export const increaseCountAC = () =>
+    ({type: 'INCREASE_COUNT'} as const)
+
+export const resetCountAC = () =>
+    ({type: 'RESET_COUNT', payload: {}} as const)
+
+export const changeMinValueAC = (newMinValue: string) =>
+    ({type: 'CHANGE_MIN_VALUE', payload: {minValue: newMinValue}} as const)
+
+export const changeMaxValueAC = (newMaxValue: string) =>
+    ({type: 'CHANGE_MAX_VALUE', payload: {maxValue: newMaxValue}} as const)
+
+export const changeWarningAC = (newWarning: string) =>
+    ({type: 'CHANGE_WARNING', payload: {warning: newWarning}} as const)
+
+export const setSaveValueAC = () =>
+    ({type: 'SET_SAVE_VALUE', payload: {}} as const)
 

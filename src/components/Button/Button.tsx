@@ -7,7 +7,7 @@ type ButtonPropsType = {
     disable?: string
 }
 
-const Button = (props: ButtonPropsType) => {
+const Button = React.memo((props: ButtonPropsType) => {
 
     const {name, callBack, disable} = props
 
@@ -22,6 +22,6 @@ const Button = (props: ButtonPropsType) => {
             {name}
         </button>
     );
-};
+});
 
 export default Button;

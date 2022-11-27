@@ -7,7 +7,7 @@ type InputPropsType = {
     valueChange: (value: string) => void
 }
 
-const Input = (props: InputPropsType) => {
+const Input = React.memo((props: InputPropsType) => {
 
     const {valueChange, value, warn} = props
 
@@ -24,6 +24,6 @@ const Input = (props: InputPropsType) => {
                 type="number" />
         </>
     );
-};
+});
 
 export default Input;
