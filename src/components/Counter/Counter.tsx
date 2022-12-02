@@ -6,12 +6,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../state/store";
 import {increaseCountAC, resetCountAC} from "../../state/reducers/counterReducer";
 
+type CounterPropsType = {
+    minValue: string
+    maxValue: string
+}
 
-const Counter = React.memo(() => {
+const Counter = React.memo((props: CounterPropsType) => {
 
     const count = useSelector<RootStateType, number>(state => state.counter.count)
-    const minValue = useSelector<RootStateType, string>(state => state.counter.minValue)
-    const maxValue = useSelector<RootStateType, string>(state => state.counter.maxValue)
 
     const dispatch = useDispatch()
 
@@ -28,19 +30,19 @@ const Counter = React.memo(() => {
         <div className={s.container}>
             <div className={s.counter}>
 
-                <div className={count >= +maxValue ? s.errorCount : s.display}>
+                <div className={count >= +props.maxValue ? s.errorCount : s.display}>
                     <Display count={count}/>
                 </div>
 
                 <div className={s.buttons}>
 
                     <Button
-                        disable={count >= +maxValue ? "disable" : ""}
+                        disable={count >= +props.maxValue ? "disable" : ""}
                         name="+"
                         callBack={inc}/>
 
                     <Button
-                        disable={count === +minValue ? "disable" : ""}
+                        disable={count === +props.minValue ? "disable" : ""}
                         name="reset"
                         callBack={reset}/>
 

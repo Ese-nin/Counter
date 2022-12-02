@@ -12,7 +12,7 @@ type InputWithSpanPropsType = {
     valueChange: (value: string) => void
 }
 
-export const InputWithSpan = (props: InputWithSpanPropsType) => {
+export const InputWithSpan = React.memo((props: InputWithSpanPropsType) => {
 
     const {title, minValue, maxValue, valueChange, warning, minView, maxView} = props
 
@@ -44,4 +44,4 @@ export const InputWithSpan = (props: InputWithSpanPropsType) => {
                 valueChange={valueChange}/>
         </>
     );
-};
+});

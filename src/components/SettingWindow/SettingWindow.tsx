@@ -11,10 +11,15 @@ import {
 } from "../../state/reducers/counterReducer";
 import {InputWithSpan} from "../Input/InputWithSpan";
 
-const SettingWindow = () => {
+type SettingWindowPropsType = {
+    minValue: string
+    maxValue: string
+}
 
-    const minValue = useSelector<RootStateType, string>(state => state.counter.minValue)
-    const maxValue = useSelector<RootStateType, string>(state => state.counter.maxValue)
+const SettingWindow = React.memo((props: SettingWindowPropsType) => {
+
+    const {minValue, maxValue} = props
+
     const warning = useSelector<RootStateType, string>(state => state.counter.warning)
 
     const dispatch = useDispatch()
@@ -30,7 +35,7 @@ const SettingWindow = () => {
             dispatch(changeWarningAC(''))
         }
         dispatch(changeMinValueAC(value))
-    }, []);
+    }, [maxValue]);
 
     const maxValueChange = useCallback((value: string) => {
         if (+minValue >= +value || +value < 0) {
@@ -39,7 +44,7 @@ const SettingWindow = () => {
             dispatch(changeWarningAC(''))
         }
         dispatch(changeMaxValueAC(value))
-    }, [])
+    }, [minValue])
 
     const setValueHandler = useCallback(() => {
         if (Number.isInteger(+minValue) && Number.isInteger(+maxValue)) {
@@ -47,7 +52,7 @@ const SettingWindow = () => {
             setMinView(minValue)
             setMaxView(maxValue)
         }
-    }, [])
+    }, [minValue, maxValue])
 
     const defaultMinValue = "0"
     const defaultMaxValue = "5"
@@ -59,7 +64,7 @@ const SettingWindow = () => {
         if (warning) {
             dispatch(changeWarningAC(''))
         }
-    }, [])
+    }, [dispatch])
 
     return (
         <div className={s.container}>
@@ -94,6 +99,6 @@ const SettingWindow = () => {
             </div>
         </div>
     );
-};
+});
 
 export default SettingWindow;
