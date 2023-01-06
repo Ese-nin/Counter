@@ -64,7 +64,7 @@ const SettingWindow = React.memo((props: SettingWindowPropsType) => {
         if (warning) {
             dispatch(changeWarningAC(''))
         }
-    }, [dispatch])
+    }, [])
 
     return (
         <div className={s.container}>
