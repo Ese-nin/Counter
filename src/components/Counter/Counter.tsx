@@ -9,6 +9,7 @@ import {increaseCountAC, resetCountAC} from "../../state/reducers/counterReducer
 type CounterPropsType = {
     minValue: string
     maxValue: string
+    settingHandler: () => void
 }
 
 const Counter = React.memo((props: CounterPropsType) => {
@@ -45,6 +46,10 @@ const Counter = React.memo((props: CounterPropsType) => {
                         disable={count === +props.minValue ? "disable" : ""}
                         name="reset"
                         callBack={reset}/>
+
+                    <Button
+                        name="set"
+                        callBack={props.settingHandler}/>
 
                 </div>
 

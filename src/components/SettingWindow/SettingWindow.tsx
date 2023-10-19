@@ -14,11 +14,12 @@ import {InputWithSpan} from "../Input/InputWithSpan";
 type SettingWindowPropsType = {
     minValue: string
     maxValue: string
+    settingHandler: () => void
 }
 
 const SettingWindow = React.memo((props: SettingWindowPropsType) => {
 
-    const {minValue, maxValue} = props
+    const {minValue, maxValue, settingHandler} = props
 
     const warning = useSelector<RootStateType, string>(state => state.counter.warning)
 
@@ -51,6 +52,7 @@ const SettingWindow = React.memo((props: SettingWindowPropsType) => {
             dispatch(setSaveValueAC())
             setMinView(minValue)
             setMaxView(maxValue)
+            settingHandler()
         }
     }, [minValue, maxValue])
 
